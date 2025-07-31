@@ -1,6 +1,9 @@
 package com.jv.HelloWorld;
 
+import com.jv.HelloWorld.models.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -8,16 +11,17 @@ import org.springframework.web.bind.annotation.*;
 public class TodoController {
     @Autowired
     private TodoService todoService;
+//    private Object HttpStatus;
+
     @GetMapping("/get")
     String getTodo(){
-        todoService.printTodos();
         return "Todoss";
     }
 
     //Path Variable
     @GetMapping("/{id}")
-    String getTodoById(@PathVariable long id ){
-        return "Todo with ID " + id;
+    ResponseEntity<Todo> getTodoById(@PathVariable long id ){
+        return new ResponseEntity<>(todoService.getTodoById(id), HttpStatus.OK);
     }
 
     //Request Param
@@ -31,8 +35,8 @@ public class TodoController {
 //        return "Todo with ID " + userId + " " + "password: " + password;
 //    }
     @PostMapping("/create")
-    String createUser(@RequestBody String body){
-        return body;
+    ResponseEntity<Todo> createUser(@RequestBody Todo todo){
+        return new ResponseEntity<>(todoService.createTodo(todo), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
