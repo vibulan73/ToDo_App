@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/todo")
 public class TodoController {
@@ -21,14 +23,25 @@ public class TodoController {
     //Path Variable
     @GetMapping("/{id}")
     ResponseEntity<Todo> getTodoById(@PathVariable long id ){
-        return new ResponseEntity<>(todoService.getTodoById(id), HttpStatus.OK);
+        try {
+            Todo createdTodo = todoService.getTodoById(id);
+            return new ResponseEntity<>(createdTodo, HttpStatus.OK);
+        }catch (RuntimeException exception) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
-    //Request Param
     @GetMapping
-    String getTodoByIdParam(@RequestParam("todoId") long id ){
-        return "Todo with ID " + id;
+    ResponseEntity<List<Todo>> getTodos(){
+        return new ResponseEntity<List<Todo>>(todoService.getTodos(), HttpStatus.OK);
     }
+
+//    //Request Param
+//    @GetMapping
+//    String getTodoByIdParam(@RequestParam("todoId") long id ){
+//        return "Todo with ID " + id;
+//    }
+
 //    wrong as password is visible to all users
 //    @GetMapping("/create")
 //    String createUser(@RequestParam String userId, @RequestParam String password ){
@@ -39,13 +52,21 @@ public class TodoController {
         return new ResponseEntity<>(todoService.createTodo(todo), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    String updateTodoById(@PathVariable long id){
-        return "Update Todo with ID " + id;
+//    @PutMapping("/{id}")
+//    String updateTodoById(@PathVariable long id){
+//        return "Update Todo with ID " + id;
+//    }
+    @PutMapping
+    ResponseEntity<Todo> updateTodoById(@RequestBody Todo todo){
+        return new ResponseEntity<>(todoService.updateTodo(todo), HttpStatus.OK);
+    }
+//    @DeleteMapping("/{id}")
+//    String deleteTodoById(@PathVariable long id){
+//        return "Delete Todo with ID " + id;
+//    }
+    @DeleteMapping("/{id}")
+    void deleteTodoById(@PathVariable long id){
+        todoService.deleteTodoById(id);
     }
 
-    @DeleteMapping("/{id}")
-    String deleteTodoById(@PathVariable long id){
-        return "Delete Todo with ID " + id;
-    }
 }
