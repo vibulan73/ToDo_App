@@ -1,5 +1,6 @@
 package com.jv.HelloWorld.models;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -16,6 +17,7 @@ public class Todo {
     Long id;
     @NotBlank
     @NotNull
+    @Schema(name= "title", example = "Complete Spring Boot")
     String title;
     @NotBlank
     @NotNull
