@@ -1,5 +1,6 @@
-package com.jv.HelloWorld;
+package com.jv.HelloWorld.controller;
 
+import com.jv.HelloWorld.service.TodoService;
 import com.jv.HelloWorld.models.Todo;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

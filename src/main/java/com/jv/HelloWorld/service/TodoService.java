@@ -1,15 +1,13 @@
-package com.jv.HelloWorld;
+package com.jv.HelloWorld.service;
 
 import com.jv.HelloWorld.models.Todo;
+import com.jv.HelloWorld.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.print.attribute.standard.PageRanges;
 import java.util.List;
 
 @Service
