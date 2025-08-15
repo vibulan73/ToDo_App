@@ -9,10 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PostMapping;
-
 
 import java.util.Map;
 
@@ -27,15 +23,15 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody Map<String, String> body){
         String email = body.get("email");
-        String password = body.get("password");
-
+        String password = passwordEncoder.encode(body.get("password"));
         if(userRepository.findByEmail(email).isPresent()){
-            return new ResponseEntity<>("Email already exists", HttpStatus.CONFLICT);  //method 1
-//            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email alreay exists");   //method 2
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists");   //method 2// return new ResponseEntity<>("Email already exists", HttpStatus.CONFLICT);  //method 1
         }
         userService.createUser(User.builder().email(email).password(password).build());
-//        return ResponseEntity.status(HttpStatus.CREATED).body("Successfully Registered");
+/////////////////////    return ResponseEntity.ok("User registered");
+
         return new ResponseEntity<>("Successfully Registered", HttpStatus.CREATED);
+        //        return ResponseEntity.status(HttpStatus.CREATED).body("Successfully Registered");
     }
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody Map<String, String> body){

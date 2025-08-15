@@ -6,16 +6,16 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
+// import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-//import java.security.Key;
+import java.security.Key;
 
 @Component
 public class JwtUtil {
     private final String SECRET = "Like, Share and Subscribe to Code io - Tamil, Download IDK, Our simple and easy to use IDE";
     private final long EXPIRATION = 1000*60;
-    private final SecretKey secretKey = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
+    private final Key secretKey = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
 
     public String generateToken(String email){
         return Jwts.builder()
